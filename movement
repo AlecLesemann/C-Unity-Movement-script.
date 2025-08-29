@@ -1,0 +1,61 @@
+using UnityEngine;
+
+public class script : MonoBehaviour
+{
+    // Assign these controllers in the Inspector
+    public RuntimeAnimatorController controllerA;
+    public RuntimeAnimatorController controllerB;
+    public RuntimeAnimatorController controllerC;
+    public Rigidbody2D rb;
+    public SpriteRenderer sr;
+    private Animator _animator;
+    public float speed;
+
+    void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
+
+    
+    public void UseControllerA()
+    {
+        // Change the animator's controller to the new one
+        _animator.runtimeAnimatorController = controllerA;
+    }
+
+    
+    public void UseControllerB()
+    {
+        _animator.runtimeAnimatorController = controllerB;
+    }
+    public void UseControllerC()
+    {
+        _animator.runtimeAnimatorController = controllerC;
+    }
+
+    void Update()
+    {
+        float input = Input.GetAxisRaw("Horizontal");
+        if (Input.GetAxisRaw("Horizontal") == 0)
+        {
+            UseControllerA();
+        }
+        
+        
+        if (rb.linearVelocity.x == -5)
+        {
+            UseControllerB();
+            sr.flipX = true;
+        }
+        if(rb.linearVelocity.x == 5)
+        {
+            UseControllerB();
+            sr.flipX = false;
+            
+        }
+
+
+        rb.linearVelocity = new Vector2(input * speed, 0);
+    }
+}
